@@ -1,0 +1,27 @@
+services:
+  neurozip_server:
+    build: .
+    container_name: neurozip_server
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - neurozip_db
+
+  neurozip_db:
+    image: postgres:17
+    container_name: neurozip_db
+    restart: always
+    env_file:
+     - .env
+    volumes:
+      - db_volume:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+
+volumes:
+  db_volume:
